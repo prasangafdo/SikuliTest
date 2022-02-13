@@ -7,35 +7,27 @@ import org.openqa.selenium.interactions.Actions;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Demo {
 
-	@Test
-	public void testMethod() throws FindFailed, InterruptedException {
-		Screen screen = new Screen();
+    static {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.get("http://demo.guru99.com/test/image_upload/index.php"); //Added a demo website
-        
-      //  Thread.sleep(5000);
 
-        //	driver.findElement(By.xpath("//input[@id='photoimg']")).click();
-      //  driver.findElement(By.xpath("//input[@type='file']")).click();
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("document.getElementById('photoimg').click()");
-        // driver.findElement(By.xpath(".//*[@id='photoimg']")).click();
-//		String filePath = "C:/Users/Prasanga Fernando/Desktop/";
-//		Screen s = new Screen();
-//        Pattern openButton = new Pattern(filePath+"openButton.PNG");
-//        Pattern filenameField = new Pattern(filePath+"filenameField.PNG");
-//
-//
-//       // s.wait(openButton, 20);
-//        s.type(filenameField,"diaphanous.txt");
-//        s.click(openButton);
+    }
+    static WebDriver driver = new ChromeDriver();
+
+	@Test
+	public void testWithSikuli() throws FindFailed, InterruptedException {
+        String workDir = System.getProperty("user.dir");
+
+
+		Screen screen = new Screen();
+
+        driver.get("http://demo.guru99.com/test/image_upload/index.php"); //Added a demo website
 
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(By.xpath(".//*[@id='photoimg']"))).click().build().perform();
@@ -46,11 +38,21 @@ public class Demo {
         Pattern filenameField = new Pattern(filePath+"filenameField.PNG");
 
 
-       // s.wait(openButton, 20);
-        screen.type(filenameField,"diaphanous.txt");
+
+        screen.wait(openButton, 200); //Added 200 milliseconds wait
+
+        String txtFile = workDir.concat("\\src\\main\\resources\\test.txt");
+        screen.type(filenameField,txtFile);
+        System.out.println("Txt file directory ====> "+txtFile);
         screen.click(openButton);
-	//	driver.close();
+        Thread.sleep(5000);
+
 	}
+
+    @AfterMethod
+    public void closeSession(){
+        driver.close();
+    }
 	
 	
 	
