@@ -12,6 +12,9 @@ import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+
 public class Demo {
 
     static {
@@ -48,6 +51,17 @@ public class Demo {
         Thread.sleep(5000);
 
 	}
+
+    @Test
+    public void testWithRobotClass(){
+
+
+            //StringSelection is a class that can be used for copy and paste operations.
+            StringSelection stringSelection = new StringSelection("file path");
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+
+
+    }
 
     @AfterMethod
     public void closeSession(){
