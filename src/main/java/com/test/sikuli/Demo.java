@@ -14,6 +14,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 
 public class Demo {
 
@@ -53,7 +54,7 @@ public class Demo {
 	}
 
     @Test
-    public void testWithRobotClass(){
+    public void testWithRobotClass() throws AWTException {
 
         String workDir = System.getProperty("user.dir");
         String txtFile = workDir.concat("\\src\\main\\resources\\test.txt");
@@ -61,6 +62,20 @@ public class Demo {
             StringSelection stringSelection = new StringSelection(txtFile);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
             System.out.println("File location ===> "+txtFile);
+
+        driver.get("http://demo.guru99.com/test/image_upload/index.php"); //Added a demo website
+
+        Actions action = new Actions(driver);
+        action.moveToElement(driver.findElement(By.xpath(".//*[@id='photoimg']"))).click().build().perform();
+
+        Robot robot = new Robot();
+        robot.delay(2000);
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
 
     }
 
