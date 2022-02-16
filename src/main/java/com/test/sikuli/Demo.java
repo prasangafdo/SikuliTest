@@ -55,11 +55,12 @@ public class Demo {
     @Test
     public void testWithRobotClass(){
 
-
+        String workDir = System.getProperty("user.dir");
+        String txtFile = workDir.concat("\\src\\main\\resources\\test.txt");
             //StringSelection is a class that can be used for copy and paste operations.
-            StringSelection stringSelection = new StringSelection("file path");
+            StringSelection stringSelection = new StringSelection(txtFile);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
-
+            System.out.println("File location ===> "+txtFile);
 
     }
 
