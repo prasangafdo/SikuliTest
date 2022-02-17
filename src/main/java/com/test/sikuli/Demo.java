@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
@@ -25,7 +28,7 @@ public class Demo {
     static WebDriver driver = new ChromeDriver();
 
     private final By inputFile = By.xpath("//p[@style='margin-left:100px;']/input");
-
+    private final By lblUploadSuccess = By.xpath("//h4[normalize-space()='File Upload Successful']");
 
 	@Test
 	public void testWithSikuli() throws FindFailed, InterruptedException {
@@ -79,13 +82,14 @@ public class Demo {
     }
 
     @Test
-    public void testWithTraditionalWay() throws InterruptedException {
+    public void testWithTraditionalWay() {
 
         driver.get("http://demo.guru99.com/test/image_upload/index.php"); //Added a demo website
         String workDir = System.getProperty("user.dir");
         String txtFile = workDir.concat("\\src\\main\\resources\\test.txt");
         driver.findElement(inputFile).sendKeys(txtFile);
-        Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lblUploadSuccess));
 
     }
 
