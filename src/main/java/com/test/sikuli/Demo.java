@@ -24,10 +24,12 @@ public class Demo {
     }
     static WebDriver driver = new ChromeDriver();
 
+    private final By inputFile = By.xpath("//p[@style='margin-left:100px;']/input");
+
+
 	@Test
 	public void testWithSikuli() throws FindFailed, InterruptedException {
         String workDir = System.getProperty("user.dir");
-
 
 		Screen screen = new Screen();
 
@@ -40,8 +42,6 @@ public class Demo {
 
         Pattern openButton = new Pattern(filePath+"openButton.PNG");
         Pattern filenameField = new Pattern(filePath+"filenameField.PNG");
-
-
 
         screen.wait(openButton, 200); //Added 200 milliseconds wait
 
@@ -76,6 +76,16 @@ public class Demo {
         robot.keyRelease(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
+    }
+
+    @Test
+    public void testWithTraditionalWay() throws InterruptedException {
+
+        driver.get("http://demo.guru99.com/test/image_upload/index.php"); //Added a demo website
+        String workDir = System.getProperty("user.dir");
+        String txtFile = workDir.concat("\\src\\main\\resources\\test.txt");
+        driver.findElement(inputFile).sendKeys(txtFile);
+        Thread.sleep(2000);
 
     }
 
